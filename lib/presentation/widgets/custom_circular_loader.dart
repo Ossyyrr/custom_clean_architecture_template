@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomCircularLoader extends StatelessWidget {
-  const CustomCircularLoader({Key? key}) : super(key: key);
+  const CustomCircularLoader({super.key});
 
   @override
   Widget build(BuildContext context) {

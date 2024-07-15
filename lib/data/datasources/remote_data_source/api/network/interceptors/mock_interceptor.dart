@@ -1,8 +1,8 @@
 import 'dart:convert';
 
+import 'package:clean_architecture_template/app/constants/mock_paths.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
-import 'package:clean_architecture_template/app/constants/mock_paths.dart';
 
 // Class to handle mock requests
 class MockInterceptor extends InterceptorsWrapper {
@@ -21,9 +21,9 @@ class MockInterceptor extends InterceptorsWrapper {
       handler.resolve(Response(requestOptions: options, data: jsonData));
     } catch (e) {
       // Rejects the request with a mock error
-      handler.reject(DioError(
+      handler.reject(DioException(
         requestOptions: options,
-        type: DioErrorType.other,
+        type: DioExceptionType.unknown,
         error: MocksPaths.error,
       ));
     }

@@ -15,11 +15,18 @@ class AppRepository implements AppRepositoryContract {
   Future<Result<bool>> getValidToken() async {
     try {
       // Call the getInvoices method from the remote data source
-      final data =
-          await _appLocalDataSourceContract.getValidToken();
+      final data = await _appLocalDataSourceContract.getValidToken();
 
       // Return the result mapped
-      return Result.success(data);
+      return data
+          ? Result.success(data)
+          : Result.failure(
+              error: RepositoryError.fromDataSourceError(
+                NetworkError.fromException(
+                  'Token is not valid. Please log in.',
+                ),
+              ),
+            );
     } catch (error) {
       // Return the parsed error
       return Result.failure(
@@ -34,8 +41,7 @@ class AppRepository implements AppRepositoryContract {
   Future<Result<void>> setValidToken(bool value) async {
     try {
       // Call the getInvoices method from the remote data source
-      final data =
-          await _appLocalDataSourceContract.setValidToken(value);
+      final data = await _appLocalDataSourceContract.setValidToken(value);
 
       // Return the result mapped
       return Result.success(data);
@@ -61,5 +67,4 @@ class AppRepository implements AppRepositoryContract {
   Future<Result<void>> logOut() {
     return setValidToken(false);
   }
-
 }

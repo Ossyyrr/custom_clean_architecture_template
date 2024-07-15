@@ -1,6 +1,6 @@
 // Part file that contains the generated code for the 'Result' class.
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:clean_architecture_template/app/types/repository_error.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'result.freezed.dart';
 

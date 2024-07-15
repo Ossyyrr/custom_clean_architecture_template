@@ -1,9 +1,9 @@
 import 'dart:io';
 
+import 'package:clean_architecture_template/app/types/errors/network_error_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:clean_architecture_template/app/types/errors/network_error_utils.dart';
 
 part 'network_error.freezed.dart';
 
@@ -56,7 +56,7 @@ class NetworkError with _$NetworkError {
     try {
       if (error is Exception) {
         NetworkError networkExceptions;
-        if (error is DioError) {
+        if (error is DioException) {
           networkExceptions = getErrorFromDioError(error);
         } else if (error is SocketException) {
           networkExceptions = const NetworkError.noInternetConnection();

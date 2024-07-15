@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
 
 const _defaultConnectTimeout = Duration.millisecondsPerMinute;
@@ -20,8 +20,10 @@ class DioClient {
 
   void addInterceptors(List<Interceptor> interceptors) {
     _dio
-      ..options.connectTimeout = _defaultConnectTimeout
-      ..options.receiveTimeout = _defaultReceiveTimeout
+      ..options.connectTimeout =
+          const Duration(milliseconds: _defaultConnectTimeout)
+      ..options.receiveTimeout =
+          const Duration(milliseconds: _defaultReceiveTimeout)
       ..httpClientAdapter
       ..options.headers = {'Content-Type': 'application/json'};
     if (interceptors.isNotEmpty) {
@@ -40,7 +42,7 @@ class DioClient {
   }
 
   void addBadCertificateCallBack() {
-    (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+    (_dio.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate =
         (HttpClient client) {
       client.badCertificateCallback =
           (X509Certificate cert, String host, int port) => true;

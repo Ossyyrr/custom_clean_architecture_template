@@ -15,9 +15,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({
     required AppRepositoryContract repositoryContract,
   })  : _repository = repositoryContract,
-        super(
-          AuthState.initial(),
-        ) {
+        super(AuthState.initial()) {
     on<AuthEvent>(
       (event, emit) async {
         await event.when(

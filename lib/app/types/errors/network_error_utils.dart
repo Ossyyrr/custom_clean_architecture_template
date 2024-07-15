@@ -1,17 +1,17 @@
-import 'package:dio/dio.dart';
 import 'package:clean_architecture_template/app/constants/mock_paths.dart';
 import 'package:clean_architecture_template/app/types/errors/network_error.dart';
+import 'package:dio/dio.dart';
 
-NetworkError getErrorFromDioError(DioError error) {
+NetworkError getErrorFromDioError(DioException error) {
   final NetworkError networkExceptions;
   switch (error.type) {
-    case DioErrorType.cancel:
+    case DioExceptionType.cancel:
       networkExceptions = const NetworkError.requestCancelled();
       break;
-    case DioErrorType.connectTimeout:
+    case DioExceptionType.connectionTimeout:
       networkExceptions = const NetworkError.requestTimeout();
       break;
-    case DioErrorType.other:
+    case DioExceptionType.unknown:
       if (error.error == MocksPaths.error) {
         networkExceptions = const NetworkError.mockNotFoundError();
       } else if (error.toString().contains('is not a subtype of')) {
@@ -20,10 +20,10 @@ NetworkError getErrorFromDioError(DioError error) {
         networkExceptions = const NetworkError.noInternetConnection();
       }
       break;
-    case DioErrorType.receiveTimeout:
+    case DioExceptionType.receiveTimeout:
       networkExceptions = const NetworkError.sendTimeout();
       break;
-    case DioErrorType.response:
+    case DioExceptionType.badResponse:
       final errorDescription =
           error.response?.data?['error']?['error_description'];
       final errorType = error.response?.data?['error']?['error_type'];
@@ -39,9 +39,13 @@ NetworkError getErrorFromDioError(DioError error) {
 
       networkExceptions = _checkStatusCode(error.response?.statusCode);
       break;
-    case DioErrorType.sendTimeout:
+    case DioExceptionType.sendTimeout:
       networkExceptions = const NetworkError.sendTimeout();
       break;
+
+    default:
+      // TODO - check this
+      networkExceptions = const NetworkError.defaultError('Unexpected error');
   }
 
   return networkExceptions;
