@@ -44,7 +44,6 @@ NetworkError getErrorFromDioError(DioException error) {
       break;
 
     default:
-      // TODO - check this
       networkExceptions = const NetworkError.defaultError('Unexpected error');
   }
 

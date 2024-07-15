@@ -46,6 +46,7 @@ Future<bool> initializeMessages(String localeName) {
   lib == null ? new SynchronousFuture(false) : lib();
   initializeInternalMessageLookup(() => new CompositeMessageLookup());
   messageLookup.addLocale(availableLocale, _findGeneratedMessagesFor);
+
   return new SynchronousFuture(true);
 }
 
@@ -61,5 +62,6 @@ MessageLookupByLibrary? _findGeneratedMessagesFor(String locale) {
   var actualLocale =
       Intl.verifiedLocale(locale, _messagesExistFor, onFailure: (_) => null);
   if (actualLocale == null) return null;
+
   return _findExact(actualLocale);
 }

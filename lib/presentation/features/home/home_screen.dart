@@ -10,6 +10,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
+  void _logOut(BuildContext context) =>
+      context.read<AuthBloc>().add(const AuthEvent.signOutEvent());
+
+  void _changeLanguage(Locale? value, BuildContext context) {
+    context.read<LanguagesBloc>().add(
+          LanguageBlocEvent.changedLanguage(
+            value ?? const Locale.fromSubtags(languageCode: 'es'),
+          ),
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,16 +62,5 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void _logOut(BuildContext context) =>
-      context.read<AuthBloc>().add(const AuthEvent.signOutEvent());
-
-  void _changeLanguage(Locale? value, BuildContext context) {
-    context.read<LanguagesBloc>().add(
-          LanguageBlocEvent.changedLanguage(
-            value ?? const Locale.fromSubtags(languageCode: 'es'),
-          ),
-        );
   }
 }

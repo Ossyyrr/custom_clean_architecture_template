@@ -12,7 +12,7 @@ class LanguagesBloc extends Bloc<LanguageBlocEvent, LanguageBlocState> {
           ),
         ) {
     on<LanguageBlocEvent>(
-      (event, emit) async {
+      (event, emit) {
         event.when(changedLanguage: (locale) {
           emit(
             state.copyWith(locale: locale),
